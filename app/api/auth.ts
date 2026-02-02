@@ -4,13 +4,13 @@ export const authRepository = () => {
 
   return {
     async login(credentials: Record<string, string>) {
-      return await $fetch<User>(`${baseUrl}/auth/login`, {
+      return await $fetch<User>(`${baseUrl}auth/login`, {
         method: 'POST',
         body: credentials,
       });
     },
     async getCurrentUser(accessToken: string) {
-      return await $fetch<User>(`${baseUrl}/auth/me`, {
+      return await $fetch<User>(`${baseUrl}auth/me`, {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
     },

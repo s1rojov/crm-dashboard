@@ -21,7 +21,7 @@ export const useApi = (url: string, opts?: any) => {
       if (response.status === 401 && refreshToken.value) {
         try {
           const data = await $fetch<{ accessToken: string }>(
-            `${config.public.apiBase}/auth/refresh`,
+            `${config.public.apiBase}auth/refresh`,
             {
               method: 'POST',
               body: {
