@@ -2,9 +2,13 @@ import { defineStore } from 'pinia';
 import type { User } from '~/types/auth';
 
 export const useAuthStore = defineStore('auth', () => {
-  const user = ref<User | null>(null);
-  const accessToken = ref<string>('');
-  const refreshToken = ref<string>('');
+  const user = useCookie<User | null>('auth_user', { default: () => null });
+  const accessToken = useCookie<string | null>('access_token', {
+    default: () => null,
+  });
+  const refreshToken = useCookie<string | null>('refresh_token', {
+    default: () => null,
+  });
 
   const isAuthenticated = computed(() => !!accessToken.value);
 

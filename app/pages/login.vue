@@ -1,11 +1,8 @@
 <script setup lang="ts">
-  // 1. Layoutni belgilash
   definePageMeta({
     layout: 'blank',
   });
 
-  // 2. Importlar (Nuxt 4 da auto-import ishlaydi, lekin Store va API larni tekshiramiz)
-  // Agar '~/api/auth' va '~/store/auth' fayllaringizda default export bo'lmasa, {} ishlatiladi
   import { useAuthStore } from '~/store/auth';
   import { authRepository } from '~/api/auth';
 
@@ -13,8 +10,8 @@
   const authStore = useAuthStore();
 
   const form = reactive({
-    username: '', // DummyJSON uchun test: 'emilys'
-    password: '', // DummyJSON uchun test: 'emilyspass'
+    username: '',
+    password: '',
   });
 
   const loading = ref(false);
@@ -25,15 +22,12 @@
     loading.value = true;
     try {
       const data = await login(form);
-
-      // Store-ga saqlash
       authStore.setAuth(data);
       console.log(data);
-      // 3. navigateTo ni await bilan ishlatish (va return qilish)
       return await navigateTo('/');
     } catch (err: any) {
       console.error('Login Error:', err);
-      alert('Login yoki parol xato! (Test uchun: emilys / emilyspass)');
+      alert('Login yoki parol xato!');
     } finally {
       loading.value = false;
     }

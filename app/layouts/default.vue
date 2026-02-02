@@ -22,7 +22,7 @@
         <h2 class="font-semibold text-gray-700">Xush kelibsiz!</h2>
         <div class="flex items-center gap-4">
           <button
-            @click="handleLogout"
+            @click="authStore.logout"
             class="text-sm text-red-500 font-medium"
           >
             Chiqish
@@ -37,9 +37,7 @@
   </div>
 </template>
 
-<script setup>
-  const handleLogout = () => {
-    // Keyinroq store-ga ulaymiz
-    console.log('Logging out...');
-  };
+<script setup lang="ts">
+  import { useAuthStore } from '~/store/auth';
+  const authStore = useAuthStore();
 </script>
