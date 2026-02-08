@@ -1,14 +1,18 @@
+import type {RuntimeConfig} from "nuxt/schema";
+import type {CookieRef} from "nuxt/app";
+import {useAuthStore} from "~/store/auth";
+
 export const useApi = (url: string, opts?: any) => {
-  const config = useRuntimeConfig();
-  const authStore = useAuthStore();
-  const accessToken = useCookie('access_token');
-  const refreshToken = useCookie('refresh_token');
+  const config:RuntimeConfig = useRuntimeConfig();
+  const authStore:any = useAuthStore();
+  const accessToken :CookieRef<string | null | undefined> = useCookie('access_token');
+  const refreshToken:CookieRef<string | null | undefined> = useCookie('refresh_token');
 
   return $fetch(url, {
     baseURL: config.public.apiBase,
     ...opts,
 
-    async onRequest({ options }) {
+    async onRequest({ options }: {options:any}):Promise<void> {
       if (accessToken.value) {
         options.headers = {
           ...options.headers,
@@ -17,7 +21,7 @@ export const useApi = (url: string, opts?: any) => {
       }
     },
 
-    async onResponseError({ response, options }) {
+    async onResponseError({ response, options }: {response:any, options: any}): Promise<any> {
       if (response.status === 401 && refreshToken.value) {
         try {
           const data = await $fetch<{ accessToken: string }>(
