@@ -1,3 +1,4 @@
+import type {User} from '~/types/auth'
 export const authRepository = () => {
   const config = useRuntimeConfig();
   const baseUrl = config.public.apiBase;
